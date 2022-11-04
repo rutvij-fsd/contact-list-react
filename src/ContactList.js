@@ -4,10 +4,6 @@ import ContactListDetails from "./ContactListDetails";
 const ContactList = () => {
   const [contactListArr, setContactListArr] = useState([]);
 
-  const fetchUsers = async() => {
-    
-
-  };
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
     .then((response) => response.json())
