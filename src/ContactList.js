@@ -24,8 +24,11 @@ const ContactList = () => {
       },
     })
       .then((response) => response.json())
-      .then((json) => {json.id=1;setContactListArr([json, ...contactListArr]);
-      console.log('json', json)});
+      .then((json) => {
+        json.id = 10;
+        setContactListArr([json, ...contactListArr]);
+        console.log("json", json);
+      });
     setInputName("");
     setInputEmail("");
   };
@@ -35,6 +38,11 @@ const ContactList = () => {
     setInputName(contactList.name);
     setInputEmail(contactList.email);
     window.scrollTo(0, 0);
+  };
+
+  const onDeleteHandle = (contactId) => {
+    const updatedArr = contactListArr.filter((contact) => contact.id !== contactId);
+    setContactListArr(updatedArr);
   };
 
   const onContactUpdateHandler = () => {
@@ -110,6 +118,7 @@ const ContactList = () => {
             <ContactListDetails
               contactList={contactList}
               onEditHandler={onEditHandler}
+              onDeleteHandle={onDeleteHandle}
               index={index}
             />
           ))}
