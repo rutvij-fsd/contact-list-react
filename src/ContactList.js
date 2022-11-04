@@ -24,7 +24,8 @@ const ContactList = () => {
       },
     })
       .then((response) => response.json())
-      .then((json) => setContactListArr([json, ...contactListArr]));
+      .then((json) => {json.id=1;setContactListArr([json, ...contactListArr]);
+      console.log('json', json)});
     setInputName("");
     setInputEmail("");
   };
