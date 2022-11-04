@@ -11,7 +11,6 @@ const ContactList = () => {
     contactId: "",
   });
   const onContactAddHandler = () => {
-    console.log("onContactAddHandler");
     if (!inputName || !inputEmail) return;
     fetch("https://jsonplaceholder.typicode.com/users", {
       method: "POST",
@@ -38,17 +37,27 @@ const ContactList = () => {
   };
 
   const onContactUpdateHandler = () => {
-    console.log("onContactUpdateHandler");
+    if (!inputName || !inputEmail) return;
     const contactIndex = contactListArr.findIndex(
       (elem) => elem.id === isEditing.contactId
     );
-    const clonedArr = [...contactListArr];
-    clonedArr[contactIndex] = {
-      id: uuid().split("-")[0],
-      name: inputName,
-      email: inputEmail,
-    };
-    setContactListArr(clonedArr);
+    fetch(`https://jsonplaceholder.typicode.com/users/${isEditing.contactId}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        id: isEditing.contactId,
+        name: inputName,
+        email: inputEmail,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        const clonedArr = [...contactListArr];
+        clonedArr[contactIndex] = json;
+        setContactListArr(clonedArr);
+      });
     setIsEditing({ ...isEditing, edit: false, contactId: "" });
     setInputName("");
     setInputEmail("");
