@@ -1,8 +1,9 @@
+import ContactList from "./ContactList";
 
 function App() {
   return (
     <div>
-      <h1>Setup Ready</h1>
+      <ContactList/>      
     </div>
   );
 }
