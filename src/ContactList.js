@@ -8,6 +8,7 @@ const ContactList = () => {
   const [inputEmail, setInputEmail] = useState("");
   const [isEditing, setIsEditing] = useState({
     edit: false,
+    contactId: "",
   });
   const onContactAddHandler = () => {
     console.log("onContactAddHandler");
@@ -26,7 +27,7 @@ const ContactList = () => {
   };
 
   const onEditHandler = (contactList) => {
-    setIsEditing({ ...isEditing, edit: true });
+    setIsEditing({ ...isEditing, edit: true, contactId: contactList.id });
     setInputName(contactList.name);
     setInputEmail(contactList.email);
     window.scrollTo(0, 0);
@@ -34,6 +35,19 @@ const ContactList = () => {
 
   const onContactUpdateHandler = () => {
     console.log("onContactUpdateHandler");
+    const contactIndex = contactListArr.findIndex(
+      (elem) => elem.id === isEditing.contactId
+    );
+    const clonedArr = [...contactListArr];
+    clonedArr[contactIndex] = {
+      id: uuid().split("-")[0],
+      name: inputName,
+      email: inputEmail,
+    };
+    setContactListArr(clonedArr);
+    setIsEditing({ ...isEditing, edit: false, contactId: "" });
+    setInputName("");
+    setInputEmail("");
   };
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
