@@ -1,29 +1,49 @@
 import React, { useState, useEffect } from "react";
 import ContactListDetails from "./ContactListDetails";
+import uuid from "react-uuid";
 
 const ContactList = () => {
   const [contactListArr, setContactListArr] = useState([]);
-  const [inputName, setInputName] = useState('');
-  const [inputEmail, setInputEmail] = useState('');
+  const [inputName, setInputName] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
   const [isEditing, setIsEditing] = useState({
     edit: false,
   });
   const onContactAddHandler = () => {
-    console.log('onContactAddHandler');
-  }
+    console.log("onContactAddHandler");
+    if (!inputName || !inputEmail) return;
+    setContactListArr([
+      {
+        id: uuid().split("-")[0],
+        name: inputName,
+        email: inputEmail,
+      },
+      ...contactListArr,
+    ]);
+
+    setInputName("");
+    setInputEmail("");
+  };
+
+  const onEditHandler = (contactList) => {
+    setIsEditing({ ...isEditing, edit: true });
+    setInputName(contactList.name);
+    setInputEmail(contactList.email);
+    window.scrollTo(0, 0);
+  };
 
   const onContactUpdateHandler = () => {
-    console.log('onContactUpdateHandler')
+    console.log("onContactUpdateHandler");
   };
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
-    .then((response) => response.json())
-    .then((contact) => setContactListArr(contact))
-    console.log('contact',contactListArr);
+      .then((response) => response.json())
+      .then((contact) => setContactListArr(contact));
+    console.log("contact", contactListArr);
   }, []);
   return (
     <div className="container text-center">
-      {console.log('render')}
+      {console.log("render")}
       <h1 className="m-3 text-info">Contact List</h1>
       <div className="d-flex justify-content-center mb-3">
         <input
@@ -34,7 +54,7 @@ const ContactList = () => {
           onChange={(e) => setInputName(e.target.value)}
         />
         <input
-          type="text"
+          type="email"
           className="form-control w-50 mt-4 m-1"
           placeholder="Contact Email"
           value={inputEmail}
@@ -59,7 +79,11 @@ const ContactList = () => {
       <div className="container">
         <div className="container">
           {contactListArr.map((contactList, index) => (
-            <ContactListDetails contactList={contactList} index={index}/>
+            <ContactListDetails
+              contactList={contactList}
+              onEditHandler={onEditHandler}
+              index={index}
+            />
           ))}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 
-const ContactListDetails = (props) => {
-  const { contactList } = props;
+const ContactListDetails = ({ contactList, onEditHandler }) => {
+  
   return (
     <div className="card m-2">
       <div className="card-body">
@@ -21,7 +21,7 @@ const ContactListDetails = (props) => {
          
         </p> */}
         
-        <button className="col-auto btn btn-secondary me-2">Edit</button>
+        <button className="col-auto btn btn-secondary me-2" onClick={() => onEditHandler(contactList)}>Edit</button>
         <button className="col-auto btn btn-danger h-75">Delete</button>
       </div>
       
