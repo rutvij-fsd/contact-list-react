@@ -13,15 +13,19 @@ const ContactList = () => {
   const onContactAddHandler = () => {
     console.log("onContactAddHandler");
     if (!inputName || !inputEmail) return;
-    setContactListArr([
-      {
+    fetch("https://jsonplaceholder.typicode.com/users", {
+      method: "POST",
+      body: JSON.stringify({
         id: uuid().split("-")[0],
         name: inputName,
         email: inputEmail,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
       },
-      ...contactListArr,
-    ]);
-
+    })
+      .then((response) => response.json())
+      .then((json) => setContactListArr([json, ...contactListArr]));
     setInputName("");
     setInputEmail("");
   };
