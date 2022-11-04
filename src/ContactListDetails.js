@@ -3,7 +3,7 @@ import React from "react";
 const ContactListDetails = (props) => {
   const { contactList } = props;
   return (
-    <div className="card">
+    <div className="card m-2">
       <div className="card-body">
         <h5 className="card-title">{contactList.name}</h5>
         <p className="card-text">
@@ -11,7 +11,7 @@ const ContactListDetails = (props) => {
           <br />
           {contactList.email}
         </p>
-        <p className="card-text">
+        {/* <p className="card-text">
           <b>Address</b>
           <br /> Street :&nbsp;
           {contactList.address.street} , Suite :&nbsp;
@@ -19,7 +19,7 @@ const ContactListDetails = (props) => {
           {contactList.address.city} , ZipCode :&nbsp;
           {contactList.address.zipcode}
          
-        </p>
+        </p> */}
         
         <button className="col-auto btn btn-secondary me-2">Edit</button>
         <button className="col-auto btn btn-danger h-75">Delete</button>
