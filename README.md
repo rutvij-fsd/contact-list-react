@@ -1,3 +1,102 @@
+
+# Contact List Web App
+
+Contact List Web App using React JS.
+
+This website is completely Responsive across all the Devices.
+
+-  Users are able to Add New Contacts.
+-  Users are able to Delete Existing Contacts.
+-  Users are able to Read Existing Contacts.
+   
+
+## Author
+
+- [@rutvij-fsd](https://github.com/rutvij-fsd)
+
+
+## API Reference
+
+#### Get all items
+
+```http
+  GET https://jsonplaceholder.typicode.com/users
+```
+```javascript
+fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((contact) => setContactListArr(contact));
+```
+#### POST
+
+```http
+  POST https://jsonplaceholder.typicode.com/users
+```
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `uuid().split("-")[0]` | **Required**. Redom generated Id from react-uuid |
+| `name`      | `inputName` | **Required**. Local State from Input |
+| `email`      | `inputEmail` | **Required**. Local State from Input |
+
+```javascript
+fetch("https://jsonplaceholder.typicode.com/users", {
+      method: "POST",
+      body: JSON.stringify({
+        id: uuid().split("-")[0],
+        name: inputName,
+        email: inputEmail,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        json.id = 10;
+        setContactListArr([json, ...contactListArr]);
+        console.log("json", json);
+      });
+```
+
+#### PUT
+
+```http
+  PUT https://jsonplaceholder.typicode.com/users/${Id}
+```
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `isEditing.contactId` | **Required**. Local State isEditing |
+| `name`      | `inputName` | **Required**. Local State from Input |
+| `email`      | `inputEmail` | **Required**. Local State from Input |
+
+```javascript
+fetch(`https://jsonplaceholder.typicode.com/users/${isEditing.contactId}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        id: isEditing.contactId,
+        name: inputName,
+        email: inputEmail,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        const clonedArr = [...contactListArr];
+        clonedArr[contactIndex] = json;
+        setContactListArr(clonedArr);
+      });
+```
+
+#### DELETE
+
+```http
+const updatedArr = contactListArr.filter((contact) => contact.id !== contactId);
+setContactListArr(updatedArr);
+```
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
